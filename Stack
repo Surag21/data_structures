@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+
+#define SIZE 2
+int top = -1;
+int stack[SIZE];
+
+int push(int x);
+void pop();
+void display();
+
+void main(){
+    int choice;
+    int n;
+    while(1){
+        printf("\nEnter the choice\n ");
+        printf("1.push\n 2.pop\n 3.display\n 4.Exit\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1: printf("\n Enter the elements to be pushed : ");
+                    scanf("%d", &n);
+                    push(n);
+                    break;
+            case 2: printf("%d Element has been deleted \n",stack[top]);
+                    pop();
+                    break;
+            case 3: display();
+                    break;
+            case 4: exit(0);
+                    break;
+            default :printf("Wrong choice Entered \n");
+        }
+    }
+
+}
+
+int push(int x){
+    if(top >= SIZE - 1){
+        printf("Stack overflow\n");
+    }
+    else{
+        top += 1;
+        stack[top] = x;
+    }
+}
+void pop(){
+    if(top == -1){
+        printf("Stack under flow\n");
+    }
+    else
+            top = top -1;
+}
+void display(){
+   int i;
+   if (top == -1){
+    printf("Stack is empty");
+   }
+   else{
+    for(i = top; i>= 0;i--){
+        printf("%d\n", stack[i]);
+    }
+   }
+}
