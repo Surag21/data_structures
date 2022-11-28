@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+#define SIZE 3
+int front =  -1, rear = -1, queue[SIZE];
+
+int IsFull(){
+    return (front == (rear + 1)%SIZE);
+}
+int IsEmpty(){
+    return (front == -1 && rear == -1);
+}
+
+void Enqueue(){
+    int x,y;
+    if(IsFull())
+        printf("\nThe Queue is full");
+    else if(IsEmpty()){
+        front = 0;
+        rear = 0;
+        printf("\nEnter the element to be inserted : ");
+        scanf("%d",&x);
+        queue[rear] = x;
+    }
+    else{
+        printf("\nEnter the element to be inserted : ");
+        scanf("%d",&y);
+        rear = (rear + 1) % SIZE;
+        queue[rear] = y;
+    }
+}
+
+void dequeue(){
+    if(IsEmpty())
+        printf("\n The queue is Empty");
+    else if(front == rear){
+            printf("\n %d Element has been removed",queue[front]);
+            front = -1;
+            rear = -1;
+    }
+    else{
+            printf("\n %d Element has been removed",queue[front]);
+        front = (front + 1) % SIZE;
+    }
+}
+
+void Display(){
+    int i;
+    if(IsEmpty())
+        printf("\nThe Queue is empty");
+    else{
+        for(i=front; i!= rear; i = (i + 1)% SIZE){
+            printf("%d ",queue[i]);
+        }
+        printf("%d ",queue[rear]);
+    }
+}
+
+void main(){
+    int choice;
+
+    while(1){
+            printf("\n Enter your choice\n 1.Insert \n 2.Delete \n 3.Display \n 4.Exit \n");
+            scanf("%d",&choice);
+            switch(choice){
+                case 1: Enqueue();
+                        break;
+                case 2: dequeue();
+                        break;
+                case 3: Display();
+                        break;
+                case 4: exit(0);
+                default: printf("\n Invalid choice entered");
+        }
+    }
+
+}
