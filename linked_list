@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node{
+    int data;
+    struct Node *next;
+};
+
+struct Node *head = NULL;
+
+struct Node *create(int y){
+    struct Node *temp;
+    temp = (struct Node *)malloc(sizeof(struct Node *));
+    temp->data = y;
+    temp->next = NULL;
+    if(head != NULL)
+    temp->next =  head;
+
+    return temp;
+}
+
+void display(){
+    struct Node *temp = head;
+    while(temp->next!=NULL){
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("%d ",temp->data);
+}
+
+int main()
+{
+    int choice,n;
+
+    while(1){
+        printf("\nEnter the choice : ");
+        scanf("%d", &choice);
+
+        switch(choice){
+            case 1: printf("\nEnter the element to be inserted : ");
+                    scanf("%d",&n);
+                    head = create(n);
+                    break;
+            case 2: display();
+            case 3: exit(0);
+                }
+    }
+    return 0;
+}
