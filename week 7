@@ -1,0 +1,194 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node{
+    int data;
+    struct Node *next;
+};
+
+struct Node *head = NULL;
+
+struct Node *create_new()
+{
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+    printf("\nEnter the integer to be inserted : ");
+    scanf("%d",&temp->data);
+    temp->next = NULL;
+    return temp;
+};
+
+void insert_at_front(){
+    if(head == NULL)
+        head = create_new();
+    else{
+        struct Node *temp = create_new();
+        temp->next = head;
+        head = temp;
+    }
+}
+
+void insert_at_end(){
+    if(head == NULL)
+        head = create_new();
+    else{
+        struct Node *last = head;
+        while(last->next)
+            last = last->next;
+        last->next = create_new();
+    }
+}
+
+int length(){
+    int count = 1;
+    struct Node *temp = head;
+    while(temp != NULL){
+        temp = temp->next;
+        count++;
+    }
+    return count;
+}
+
+void insert_in_pos(){
+    int pos;
+    int i;
+    if(head == NULL)
+        head = create_new();
+    else{
+            struct Node *temp = head;
+            printf("\nEnter the position in which you want to insert : ");
+            scanf("%d",&pos);
+            if(pos > length())
+                printf("\nInvalid Position\n");
+            else{
+                for(i=0; i<--pos; i++)
+                    temp = temp->next;
+                struct node * temp1=temp->next;
+                temp->next=create_new();
+                (temp->next)->next=temp1;
+            }
+    }
+}
+
+int delete_at_front(){
+    if(head==NULL)
+        printf("\n No elements to delete\n");
+    else{
+        struct Node *temp = head;
+        int x = temp->data;
+        head = head->next;
+        free(temp);
+        return x;
+    }
+}
+
+int delete_from_end(){
+    if(head==NULL)
+        printf("\nNo elements to delete\n");
+        else if(head->next == NULL){
+            struct Node *temp = head;
+            int x = head->data;
+            free(temp);
+            head = NULL;
+            return x;
+        }
+    else{
+        struct Node *temp = head,*p=NULL;
+        while(temp->next){
+            p = temp;
+            temp = temp->next;
+        }
+        int x = temp->data;
+        free(temp);
+        p->next = NULL;
+        return x;
+    }
+}
+
+int delete_by_value(){
+    if(head == NULL)
+        printf("\nNo elements to delete\n");
+    else{
+        struct Node *temp = head, *p = NULL;
+        int x;
+        printf("\nEnter the Element to delete : ");
+        scanf("%d",&x);
+        while(temp->data != x && temp->next){
+            p = temp;
+            temp = temp->next;
+        }
+        if(head->data == x)
+            x = delete_at_front();
+
+        else if(temp->data == x){
+            p->next = temp->next;
+            free(temp);
+            return x;
+        }
+        else{
+            printf("\nElement not found\n");
+            return 0;
+        }
+    }
+}
+
+void display(){
+    if(head == NULL)
+        printf("No elements inserted");
+    else{
+        struct Node *temp = head;
+        while(temp->next){
+            printf("%d ",temp->data);
+            temp = temp->next;
+        }
+        printf("%d ",temp->data);
+        printf("\n");
+    }
+}
+
+void main(){
+    int choice;
+    while (1)
+    {
+        printf("\n1.Insert element in beginning\n2.Insert element at end\n3.Insert element at specified position\n4.Display\n5.Delete at front\n6.Delete at end\n7.Delete by value\n8.Exit\n");
+        printf("Enter choice\n");
+        scanf("%d",&choice);
+        switch (choice)
+        {
+        case 1:
+            insert_at_front();
+            break;
+
+        case 2:
+            insert_at_end();
+            break;
+
+        case 3:
+            insert_in_pos();
+            break;
+
+        case 4:
+            display();
+            break;
+
+        case 5:
+            printf("\nYou have deleted : %d",delete_at_front());
+            break;
+
+        case 6:
+            printf("\nYou have deleted : %d",delete_from_end());
+            break;
+
+        case 7:
+            printf("\nYou have deleted : %d",delete_by_value());
+            break;
+
+        case 8:
+            exit(0);
+
+        default:printf("invalid choice");
+            break;
+        }
+    }
+
+
+}
